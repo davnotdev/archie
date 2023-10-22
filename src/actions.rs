@@ -1,7 +1,13 @@
 use argh::FromArgs;
 
 #[derive(FromArgs)]
-/// Archie's Actions
+/// Archie is a simple CLI tool that allows you to archive infrequently used folders effortlessly
+/// and intelligently.
+///
+/// Archie knows to remove unneeded files from the final archive: npm packages, cargo packages,
+/// etc.
+///
+/// Find out more at https://github.com/davnotdev/archie
 pub struct Actions {
     #[argh(subcommand)]
     /// actions

@@ -36,7 +36,7 @@ impl Archive {
             .iter()
             .any(|file| *file == b64_target)
         {
-            anyhow::bail!("Duplicate push!");
+            anyhow::bail!("That directory has already been pushed.");
         }
 
         brushes::brush_directory(target)?;
@@ -73,11 +73,12 @@ impl Archive {
             fs::remove_file(tar_path)?;
             Ok(())
         } else {
-            anyhow::bail!("No such pull!");
+            anyhow::bail!("That directory has not been pushed!");
         }
     }
 
     pub fn list(&self) -> Result<()> {
+        eprintln!("Pushed Directories:");
         for dir in self.archived_directories.iter() {
             println!("{} {}", String::from_utf8(dir.from_base64()?)?, dir);
         }
