@@ -8,6 +8,10 @@ repository = "https://github.com/davnotdev"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "archie"
+path = "src/main.rs"
+
 [dependencies]
 argh = "0.1.12"
 toml = "0.8.2"
