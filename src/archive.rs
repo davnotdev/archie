@@ -39,6 +39,8 @@ impl Archive {
             anyhow::bail!("Duplicate push!");
         }
 
+        brushes::brush_directory(target)?;
+
         let archive = create_tar_archive(target)?;
         let compressed = Compression::compress(&self.config, &archive)?;
         let mut write_path = PathBuf::from(&self.config.archive_location);
