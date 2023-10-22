@@ -1,7 +1,7 @@
 use super::*;
 
 pub fn npm_check() -> Result<bool> {
-    Ok(Command::new("cargo").output().is_ok())
+    Ok(Command::new("npm").output().is_ok())
 }
 
 pub fn npm_visitor(dir: &Path) -> Result<()> {
