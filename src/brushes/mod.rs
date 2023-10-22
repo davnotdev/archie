@@ -2,6 +2,8 @@ use super::*;
 use std::{fs, path::Path, process::Command};
 
 mod cargo;
+mod make;
+mod ninja;
 mod npm;
 
 type Visitor = fn(dir: &Path) -> Result<()>;
@@ -39,5 +41,7 @@ fn brushes() -> &'static [(&'static str, Check, Visitor)] {
     &[
         ("cargo", cargo::cargo_check, cargo::cargo_visitor),
         ("npm", npm::npm_check, npm::npm_visitor),
+        ("make", make::make_check, make::make_visitor),
+        ("ninja", ninja::ninja_check, ninja::ninja_visitor),
     ]
 }
