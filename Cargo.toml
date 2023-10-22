@@ -3,7 +3,7 @@ name = "archie"
 version = "0.1.0"
 edition = "2021"
 description = "Archie is a simple CLI tool that allows you to archive infrequently used folders effortlessly and intelligently."
-license = "mit"
+license = "MIT"
 repository = "https://github.com/davnotdev"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
