@@ -1,5 +1,5 @@
 [package]
-name = "archie"
+name = "archie-cli"
 version = "0.1.0"
 edition = "2021"
 description = "Archie is a simple CLI tool that allows you to archive infrequently used folders effortlessly and intelligently."
