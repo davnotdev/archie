@@ -2,6 +2,7 @@ use anyhow::{Context, Result};
 
 mod actions;
 mod archive;
+mod brushes;
 mod compression;
 mod config;
 mod tar_archive;
