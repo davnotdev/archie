@@ -53,6 +53,8 @@ impl Archive {
     }
 
     pub fn pull(&self, target: &str) -> Result<()> {
+        let _ = fs::create_dir_all(target);
+
         let b64_target = fs::canonicalize(target)?
             .to_str()
             .unwrap()

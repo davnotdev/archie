@@ -42,12 +42,12 @@ impl Config {
 
 fn config_location() -> String {
     let mut config_dir = config_dir().unwrap();
-    config_dir.push("archie");
-    config_dir.to_str().unwrap().to_owned()
+    config_dir.push("archie/");
+    config_dir.display().to_string()
 }
 
 fn default_archive_location() -> String {
     let mut data_dir = data_dir().unwrap();
-    data_dir.push("archie");
-    data_dir.to_str().unwrap().to_owned()
+    data_dir.push("archie/");
+    data_dir.display().to_string()
 }
