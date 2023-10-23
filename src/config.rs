@@ -1,5 +1,5 @@
 use super::*;
-use homedir::get_my_home;
+use dirs::{config_dir, data_dir};
 use serde::{Deserialize, Serialize};
 use std::fs;
 
@@ -13,36 +13,41 @@ pub struct Config {
 impl Default for Config {
     fn default() -> Self {
         Self {
-            archive_location: default_archive_location().unwrap(),
+            archive_location: default_archive_location(),
         }
     }
 }
 
 impl Config {
     pub fn load() -> Result<Self> {
-        let _ = fs::create_dir(config_location()?);
-        let config_str = fs::read_to_string(config_location()? + CONFIG_FILE_NAME).with_context(|| {
-            format!(
-                "Failed to read file from {}/{}, perhaps you have not set up archie yet?",
-                config_location().unwrap(),
-                CONFIG_FILE_NAME
-            )
-        })?;
+        let _ = fs::create_dir(config_location());
+        let config_str =
+            fs::read_to_string(config_location() + CONFIG_FILE_NAME).with_context(|| {
+                format!(
+                    "Failed to read file from {}/{}, perhaps you have not set up archie yet?",
+                    config_location(),
+                    CONFIG_FILE_NAME
+                )
+            })?;
 
         toml::from_str(&config_str).with_context(|| {
             format!(
                 "Failed to parse toml file from {}/{}",
-                config_location().unwrap(),
+                config_location(),
                 CONFIG_FILE_NAME
             )
         })
     }
 }
 
-fn config_location() -> Result<String> {
-    Ok(get_my_home()?.unwrap().to_str().unwrap().to_owned() + "/.config/archie/")
+fn config_location() -> String {
+    let mut config_dir = config_dir().unwrap();
+    config_dir.push("archie");
+    config_dir.to_str().unwrap().to_owned()
 }
 
-fn default_archive_location() -> Result<String> {
-    Ok(get_my_home()?.unwrap().to_str().unwrap().to_owned() + "/.archie/")
+fn default_archive_location() -> String {
+    let mut data_dir = data_dir().unwrap();
+    data_dir.push("archie");
+    data_dir.to_str().unwrap().to_owned()
 }
