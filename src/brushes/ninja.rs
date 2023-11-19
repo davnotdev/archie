@@ -5,16 +5,15 @@ pub fn ninja_check() -> Result<bool> {
 }
 
 pub fn ninja_visitor(dir: &Path) -> Result<()> {
-    for dir in fs::read_dir(dir)? {
-        let dir = dir?;
-        if dir.file_type()?.is_file() && dir.file_name() == "build.ninja" {
-            let mut clean_dir = dir.path();
-            clean_dir.pop();
+    for subdir in fs::read_dir(dir)? {
+        let subdir = subdir?;
+        if subdir.file_type()?.is_file() && subdir.file_name() == "build.ninja" {
             Command::new("ninja")
                 .arg("clean")
                 .arg("-C")
-                .arg(clean_dir)
+                .arg(dir)
                 .output()?;
+            break;
         }
     }
     Ok(())

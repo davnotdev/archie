@@ -2,9 +2,16 @@ use super::*;
 use std::{fs, path::Path, process::Command};
 
 mod cargo;
+mod go;
+mod gradle;
+mod luarocks;
 mod make;
+mod meson;
 mod ninja;
 mod npm;
+mod nuget;
+mod pod;
+mod swift;
 
 type Visitor = fn(dir: &Path) -> Result<()>;
 type Check = fn() -> Result<bool>;
@@ -40,8 +47,19 @@ pub fn brush_directory<P: AsRef<Path>>(target: P) -> Result<()> {
 fn brushes() -> &'static [(&'static str, Check, Visitor)] {
     &[
         ("cargo", cargo::cargo_check, cargo::cargo_visitor),
-        ("npm", npm::npm_check, npm::npm_visitor),
+        ("go", go::go_check, go::go_visitor),
+        ("gradle", gradle::gradle_check, gradle::gradle_visitor),
+        (
+            "luarocks",
+            luarocks::luarocks_check,
+            luarocks::luarocks_visitor,
+        ),
         ("make", make::make_check, make::make_visitor),
+        ("meson", meson::meson_check, meson::meson_visitor),
         ("ninja", ninja::ninja_check, ninja::ninja_visitor),
+        ("npm", npm::npm_check, npm::npm_visitor),
+        ("nuget", nuget::nuget_check, nuget::nuget_visitor),
+        ("pod", pod::pod_check, pod::pod_visitor),
+        ("swift", swift::swift_check, swift::swift_visitor),
     ]
 }

@@ -5,10 +5,10 @@ pub fn cargo_check() -> Result<bool> {
 }
 
 pub fn cargo_visitor(dir: &Path) -> Result<()> {
-    for dir in fs::read_dir(dir)? {
-        let dir = dir?;
-        if dir.file_type()?.is_file() && dir.file_name() == "Cargo.lock" {
-            let mut manifest = dir.path();
+    for subdir in fs::read_dir(dir)? {
+        let subdir = subdir?;
+        if subdir.file_type()?.is_file() && subdir.file_name() == "Cargo.lock" {
+            let mut manifest = subdir.path();
             manifest.pop();
             manifest.push("Cargo.toml");
             Command::new("cargo")
@@ -16,6 +16,7 @@ pub fn cargo_visitor(dir: &Path) -> Result<()> {
                 .arg("--manifest-path")
                 .arg(manifest)
                 .output()?;
+            break;
         }
     }
     Ok(())
